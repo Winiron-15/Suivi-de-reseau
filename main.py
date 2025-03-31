@@ -20,3 +20,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#Exécuter le script avec "python main.py --input machines.csv --output results.csv"

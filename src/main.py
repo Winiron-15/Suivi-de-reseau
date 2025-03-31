@@ -1,6 +1,6 @@
-from arguments import parse_arguments
-from scanner import scan_ips
-from utils import read_from_csv, save_to_csv
+from src.arguments import parse_arguments
+from src.scanner import scan_ips
+from src.utils import read_from_csv, save_to_csv
 
 def main():
     args = parse_arguments()
@@ -21,4 +21,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#Exécuter le script avec "python main.py --input machines.csv --output results.csv"
+#Exécuter le script avec "python src/main.py --input data/machines.csv --output data/results.csv"

@@ -1,0 +1,5 @@
+Machine,IP,Status,Ping (ms)
+OPNsense-EXT,10.10.1.2,Active,95
+OPNsense-INT,10.10.2.2,Active,96
+srv-jellyfin,172.16.20.1,Active,96
+DNS de Google,8.8.8.8,Active,68

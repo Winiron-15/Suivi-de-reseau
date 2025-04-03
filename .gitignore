@@ -1,0 +1,37 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+*.sqlite3
+*.db
+*.pkl
+*.env
+*.venv
+.env/
+.venv/
+dist/
+build/
+
+# === VS Code ===
+.vscode/
+
+# === Tests et couverture ===
+htmlcov/
+.coverage
+coverage.xml
+
+# === Documentation Sphinx ===
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# === Fichiers de résultats générés par le script ===
+data/results/
+results.csv
+range-results.csv
+file-results.csv
+
+# === Autres fichiers à ignorer ===
+.DS_Store
+Thumbs.db

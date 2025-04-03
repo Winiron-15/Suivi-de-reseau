@@ -1,6 +1,8 @@
 from arguments import parse_arguments
 from scanner import scan_ips
 from utils import read_from_csv, save_to_csv
+from async_scanner import async_scan_ips
+import asyncio
 import ipaddress
 
 def main():
@@ -22,7 +24,12 @@ def main():
         return
 
     print("Starting network scan...")
-    results = scan_ips(machines, args.threads)
+    if args.use_async:
+        print("Using asynchronous scan...")
+        results = asyncio.run(async_scan_ips(machines))
+    else:
+        print("Using threaded scan...")
+        results = scan_ips(machines, args.threads)
 
     for result in results:
         print(f"Machine: {result[0]} - IP: {result[1]} - Status: {result[2]} - Ping: {result[3]} ms")

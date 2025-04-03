@@ -1,15 +1,8 @@
 from concurrent.futures import ThreadPoolExecutor
+from utils import extract_latency
+from utils import resolve_hostname_if_needed
 import platform
 import subprocess
-import socket
-from datetime import datetime
-
-def resolve_hostname(ip):
-    """Try to resolve the hostname using reverse DNS."""
-    try:
-        return socket.gethostbyaddr(ip)[0]
-    except Exception:
-        return ip
 
 def ping_ip(machine_name, ip):
     """Pings a single IP address and returns the result."""
@@ -17,19 +10,18 @@ def ping_ip(machine_name, ip):
         param = "-n" if platform.system().lower() == "windows" else "-c"
         timeout = "-w" if platform.system().lower() == "windows" else "-W"
 
-        start = datetime.now()
         result = subprocess.run(
             ["ping", param, "3", timeout, "2", ip],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
-        end = datetime.now()
 
         if result.returncode == 0:
-            latency = (end - start).microseconds // 1000
+            stdout_str = result.stdout
+            latency = extract_latency(stdout_str)
             if machine_name == ip:
-                machine_name = resolve_hostname(ip)
+                machine_name = resolve_hostname_if_needed(machine_name, ip)
             return machine_name, ip, "Active", latency
         else:
             return machine_name, ip, "Inactive", None

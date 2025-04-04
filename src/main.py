@@ -4,11 +4,22 @@ from utils.csv_utils import read_from_csv
 from utils.logger import setup_logger
 import ipaddress
 import csv
+import shutil
+import sys
 
 logger = setup_logger()
 
+def check_nmap_installed():
+    logger.info("Vérification de la présence de nmap...")
+    if shutil.which("nmap") is None:
+        logger.error("Nmap n'est pas installé ou n'est pas dans le PATH. Veuillez l'installer pour utiliser l'option --ports.")
+        sys.exit(1)
+
 def main():
     args = parse_arguments()
+
+    if args.ports:
+        check_nmap_installed()
 
     if hasattr(args, 'range') and args.range:
         try:

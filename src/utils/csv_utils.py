@@ -11,7 +11,6 @@ def read_from_csv(filename):
                 machines.append((row[0], row[1]))
     return machines
 
-
 def save_to_csv(results, filename="results.csv"):
     """Saves scan results to a CSV file."""
     with open(filename, "w", newline="") as csvfile:

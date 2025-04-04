@@ -1,10 +1,25 @@
 from arguments import parse_arguments
-from scanner import scan_ips
-from utils import read_from_csv, save_to_csv
+from core.runner import run_scan
+from utils.csv_utils import read_from_csv
+from utils.logger import setup_logger
 import ipaddress
+import csv
+import shutil
+import sys
+
+logger = setup_logger()
+
+def check_nmap_installed():
+    logger.info("Vérification de la présence de nmap...")
+    if shutil.which("nmap") is None:
+        logger.error("Nmap n'est pas installé ou n'est pas dans le PATH. Veuillez l'installer pour utiliser l'option --ports.")
+        sys.exit(1)
 
 def main():
     args = parse_arguments()
+
+    if args.ports:
+        check_nmap_installed()
 
     if hasattr(args, 'range') and args.range:
         try:
@@ -12,24 +27,44 @@ def main():
             machines = [(str(ip), str(ip)) for ip in network.hosts()]
             output_file = "data/results/range-results.csv"
         except ValueError as e:
-            print(f"Invalid CIDR range: {e}")
+            logger.error(f"Invalid CIDR range: {e}")
             return
     elif hasattr(args, 'file') and args.file:
         machines = read_from_csv(args.file)
         output_file = "data/results/file-results.csv"
     else:
-        print("You must provide either --file or --range")
+        logger.error("You must provide either --file or --range")
         return
 
-    print("Starting network scan...")
-    results = scan_ips(machines, args.threads)
+    logger.info("Appuyez sur Ctrl + C à tout moment pour interrompre le scan.")
 
-    for result in results:
-        print(f"Machine: {result[0]} - IP: {result[1]} - Status: {result[2]} - Ping: {result[3]} ms")
+    try:
+        logger.info("Starting network scan...")
+        results = run_scan(
+            machines,
+            use_async=args.use_async,
+            threads=args.threads,
+            ports=args.ports
+        )
+    except KeyboardInterrupt:
+        logger.warning("Scan interrompu par l'utilisateur (Ctrl + C).")
+        return
 
-    save_to_csv(results, output_file)
-    print(f"Results saved to {output_file}")
+    for machine, ip, status, latency, ports in results:
+        if ports:
+            port_list_str = ", ".join(f"{p} - {s}" for p, s in ports)
+        else:
+            port_list_str = ""
+        logger.info(f"Machine: {machine} - IP: {ip} - Status: {status} - Ping: {latency} ms - Ports: {port_list_str}")
 
+    with open(output_file, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Machine", "IP", "Status", "Ping (ms)", "Ports"])
+        for machine, ip, status, latency, ports in results:
+            port_str = " ".join(f"[{p} - {s}]" for p, s in ports)
+            writer.writerow([machine, ip, status, latency, port_str])
+
+    logger.info(f"Results saved to {output_file}")
 
 if __name__ == "__main__":
     main()

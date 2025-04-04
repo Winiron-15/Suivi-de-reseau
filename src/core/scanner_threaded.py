@@ -1,22 +1,18 @@
 from concurrent.futures import ThreadPoolExecutor
-from utils import extract_latency
-from utils import resolve_hostname_if_needed
-import platform
+from core.ping import build_ping_command
+from utils.parsing import extract_latency, resolve_hostname_if_needed
 import subprocess
 
 def ping_ip(machine_name, ip):
     """Pings a single IP address and returns the result."""
     try:
-        param = "-n" if platform.system().lower() == "windows" else "-c"
-        timeout = "-w" if platform.system().lower() == "windows" else "-W"
-
+        cmd = build_ping_command(ip)
         result = subprocess.run(
-            ["ping", param, "3", timeout, "2", ip],
+            cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
-
         if result.returncode == 0:
             stdout_str = result.stdout
             latency = extract_latency(stdout_str)

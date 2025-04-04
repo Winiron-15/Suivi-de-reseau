@@ -1,14 +1,11 @@
-from utils import extract_latency
-from utils import resolve_hostname_if_needed
 import asyncio
-import platform
+from core.ping import build_ping_command
+from utils.parsing import extract_latency, resolve_hostname_if_needed
 
 async def async_ping_ip(machine_name, ip):
     """Asynchronously pings an IP address and returns the result."""
     try:
-        param = "-n" if platform.system().lower() == "windows" else "-c"
-        timeout = "-w" if platform.system().lower() == "windows" else "-W"
-        cmd = ["ping", param, "3", timeout, "2", ip]
+        cmd = build_ping_command(ip)
 
         process = await asyncio.create_subprocess_exec(
             *cmd,
@@ -19,7 +16,7 @@ async def async_ping_ip(machine_name, ip):
         try:
             stdout_str = stdout.decode('utf-8')
         except UnicodeDecodeError:
-            stdout_str = stdout.decode('latin1')  # ou 'cp850' selon ton système
+            stdout_str = stdout.decode('latin1')
 
         if process.returncode == 0:
             latency = extract_latency(stdout_str)

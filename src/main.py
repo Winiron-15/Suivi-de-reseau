@@ -3,6 +3,7 @@ from core.runner import run_scan
 from utils.csv_utils import read_from_csv
 from utils.logger import setup_logger
 import ipaddress
+import csv
 
 logger = setup_logger()
 
@@ -24,13 +25,19 @@ def main():
         logger.error("You must provide either --file or --range")
         return
 
-    logger.info("Starting network scan...")
-    results = run_scan(
-        machines,
-        use_async=args.use_async,
-        threads=args.threads,
-        ports=args.ports
-    )
+    logger.info("Appuyez sur Ctrl + C à tout moment pour interrompre le scan.")
+
+    try:
+        logger.info("Starting network scan...")
+        results = run_scan(
+            machines,
+            use_async=args.use_async,
+            threads=args.threads,
+            ports=args.ports
+        )
+    except KeyboardInterrupt:
+        logger.warning("Scan interrompu par l'utilisateur (Ctrl + C).")
+        return
 
     for machine, ip, status, latency, ports in results:
         if ports:
@@ -39,8 +46,6 @@ def main():
             port_list_str = ""
         logger.info(f"Machine: {machine} - IP: {ip} - Status: {status} - Ping: {latency} ms - Ports: {port_list_str}")
 
-    # Sauvegarde CSV avec services
-    import csv
     with open(output_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Machine", "IP", "Status", "Ping (ms)", "Ports"])

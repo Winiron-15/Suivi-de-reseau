@@ -28,8 +28,7 @@ def save_to_csv(results, filename="results.csv"):
     Args:
         results (list of tuple): Résultats à enregistrer,
           sous forme (nom, ip, statut, ping).
-        filename (str, optional): Nom du fichier de sortie.
-          Par défaut "results.csv".
+        filename (str, optional): Nom du fichier de sortie. Par défaut "results.csv".
 
     Returns:
         None

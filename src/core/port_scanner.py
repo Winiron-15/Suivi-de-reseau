@@ -24,7 +24,7 @@ def scan_with_nmap(ip):
 
         open_ports = []
         for line in output.splitlines():
-            match = re.match(r"^(\\d+)/tcp\\s+open\\s+(\\S+)", line)
+            match = re.match(r"^(\d+)/tcp\s+open\s+(\S+)", line)
             if match:
                 port = int(match.group(1))
                 service = match.group(2)

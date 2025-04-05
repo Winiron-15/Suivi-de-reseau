@@ -104,20 +104,47 @@ Nom de machine, IP, Statut, Ping (ms), Ports ouverts
 
 ```
 SUVI-DE-RESEAU/
+├── .github/
+│   └── workflows/
+│       ├── deploy-doc.yml
+│       └── pep8.yml
 ├── data/
 │   ├── machines.csv
 │   └── results/
 │       ├── file-results.csv
 │       └── range-results.csv
-│
+├── docs/
+│   ├── build/
+│   ├── source/
+│   │   ├── _static/
+│   │   ├── _templates/
+│   │   ├── arguments.rst
+│   │   ├── conf.py
+│   │   ├── core.rst
+│   │   ├── index.rst
+│   │   ├── main.rst
+│   │   ├── usage.rst
+│   │   └── utils.rst
+│   ├── make.bat
+│   └── Makefile
 ├── src/
 │   ├── core/
+│   │   ├── ping.py
+│   │   ├── port_scanner.py
+│   │   ├── runner.py
+│   │   ├── scanner_async.py
+│   │   └── scanner_threaded.py
 │   ├── utils/
+│   │   ├── csv_utils.py
+│   │   ├── logger.py
+│   │   ├── parsing.py
+│   │   └── __init__.py
 │   ├── arguments.py
 │   └── main.py
 ├── .gitignore
 └── README.md
 ```
+📚 [Consulter la documentation complète](https://winiron-15.github.io/Suivi-de-reseau/)
 
 ---
 

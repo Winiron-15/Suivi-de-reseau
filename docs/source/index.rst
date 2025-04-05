@@ -1,20 +1,20 @@
-.. Suivi de Réseau documentation master file, created by
-   sphinx-quickstart on Sat Apr  5 09:54:36 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Documentation - Suivi de Réseau
+===============================
 
-Suivi de Réseau documentation
-=============================
+Bienvenue dans la documentation du projet **Suivi de Réseau**, un outil de scan d'adresses IP
+et de ports TCP, conçu pour analyser des réseaux locaux en profondeur.
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Ce projet permet de :
+- Scanner une plage IP en CIDR ou un fichier CSV
+- Identifier les hôtes actifs (via ping)
+- Scanner les ports ouverts (avec Nmap)
+- Exporter les résultats en CSV
 
 .. toctree::
    :maxdepth: 2
    :caption: Contenu
 
+   usage
    arguments
    main
    core

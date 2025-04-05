@@ -1,3 +1,4 @@
+"""Module contenant l'analyse des arguments pour le scanner réseau."""
 import argparse
 
 

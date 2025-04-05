@@ -62,13 +62,13 @@ serveur2,192.168.1.20
 Commande :
 
 ```bash
-python src/main.py --file data/machines.csv
+python -m src.main --file data/machines.csv
 ```
 
 ### 🌐 2. Scanner une plage IP au format CIDR
 
 ```bash
-python src/main.py --range 192.168.1.0/24
+python -m src.main --range 192.168.1.0/24
 ```
 
 ### ⚙️ Options supplémentaires
@@ -82,7 +82,7 @@ python src/main.py --range 192.168.1.0/24
 Exemple complet :
 
 ```bash
-python src/main.py --range 192.168.1.0/24 --async --ports
+python -m src.main --range 192.168.1.0/24 --async --ports
 ```
 
 ---

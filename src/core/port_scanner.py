@@ -1,8 +1,11 @@
+"""Module pour effectuer un scan complet des ports TCP d'une IP avec nmap."""
+
 import subprocess
 import re
+from typing import List, Tuple
 
 
-def scan_with_nmap(ip):
+def scan_with_nmap(ip: str) -> List[Tuple[int, str]]:
     """
     Utilise nmap pour scanner tous les ports TCP sur une IP donnée.
 
@@ -18,8 +21,9 @@ def scan_with_nmap(ip):
             cmd,
             capture_output=True,
             text=True,
-            timeout=60
-            )
+            timeout=60,
+            check=True
+        )
         output = result.stdout
 
         open_ports = []
@@ -32,6 +36,11 @@ def scan_with_nmap(ip):
 
         return open_ports
 
-    except Exception as e:
-        print(f"[ERROR] Nmap scan failed for {ip}: {e}")
-        return []
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] Nmap scan process failed: {e}")
+    except subprocess.TimeoutExpired as e:
+        print(f"[ERROR] Nmap scan timed out: {e}")
+    except OSError as e:
+        print(f"[ERROR] OS error during nmap execution: {e}")
+
+    return []

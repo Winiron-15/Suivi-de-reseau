@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
-from core.ping import build_ping_command
-from utils.parsing import extract_latency, resolve_hostname_if_needed
+from src.core.ping import build_ping_command
+from src.utils.parsing import extract_latency, resolve_hostname_if_needed
 import subprocess
 
 

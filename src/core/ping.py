@@ -1,3 +1,7 @@
+"""
+Fonctions utilitaires pour construire des commandes ping selon l'OS utilisé.
+"""
+
 import platform
 
 

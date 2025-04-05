@@ -1,5 +1,2 @@
 Machine,IP
-srv-windows,172.16.10.21
-OPNsense-EXT,10.10.1.2
-OPNsense-INT,10.10.2.2
 srv-jellyfin,172.16.20.1

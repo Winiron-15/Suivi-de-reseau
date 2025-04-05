@@ -1,12 +1,14 @@
 import logging
 
+
 def setup_logger(name="network_scanner", level=logging.INFO):
     """
     Configure et retourne un logger personnalisé avec un format lisible.
 
     Args:
         name (str, optional): Nom du logger. Par défaut "network_scanner".
-        level (int, optional): Niveau de log (ex: logging.INFO, logging.DEBUG). Par défaut INFO.
+        level (int, optional): Niveau de log (ex: logging.INFO, logging.DEBUG).
+          Par défaut INFO.
 
     Returns:
         logging.Logger: Instance de logger configurée.

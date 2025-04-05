@@ -7,27 +7,29 @@ import csv
 import shutil
 import sys
 
+
 logger = setup_logger()
+
 
 def check_nmap_installed():
     """
     Vérifie que la commande 'nmap' est bien installée sur le système.
-    Arrête l'exécution du programme avec un message d'erreur si nmap est introuvable.
-
-    Returns:
-        None
+    Arrête l'exécution du programme avec un message d'erreur
+    si nmap est introuvable.
     """
     logger.info("Vérification de la présence de nmap...")
     if shutil.which("nmap") is None:
-        logger.error("Nmap n'est pas installé ou n'est pas dans le PATH. Veuillez l'installer pour utiliser l'option --ports.")
+        logger.error(
+            "Nmap n'est pas installé ou n'est pas dans le PATH. "
+            "Veuillez l'installer pour utiliser l'option --ports."
+        )
         sys.exit(1)
+
 
 def main():
     """
-    Point d'entrée principal du script. Traite les arguments, lance le scan et sauvegarde les résultats.
-
-    Returns:
-        None
+    Point d'entrée principal du script. Traite les arguments,
+    lance le scan et sauvegarde les résultats.
     """
     args = parse_arguments()
 
@@ -42,6 +44,7 @@ def main():
         except ValueError as e:
             logger.error(f"Invalid CIDR range: {e}")
             return
+
     elif hasattr(args, 'file') and args.file:
         machines = read_from_csv(args.file)
         output_file = "data/results/file-results.csv"
@@ -64,11 +67,13 @@ def main():
         return
 
     for machine, ip, status, latency, ports in results:
-        if ports:
-            port_list_str = ", ".join(f"{p} - {s}" for p, s in ports)
-        else:
-            port_list_str = ""
-        logger.info(f"Machine: {machine} - IP: {ip} - Status: {status} - Ping: {latency} ms - Ports: {port_list_str}")
+        port_list_str = (
+            ", ".join(f"{p} - {s}" for p, s in ports) if ports else ""
+        )
+        logger.info(
+            f"Machine: {machine} - IP: {ip} - Status: {status} - "
+            f"Ping: {latency} ms - Ports: {port_list_str}"
+        )
 
     with open(output_file, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
@@ -77,7 +82,6 @@ def main():
             port_str = " ".join(f"[{p} - {s}]" for p, s in ports)
             writer.writerow([machine, ip, status, latency, port_str])
 
-    logger.info(f"Results saved to {output_file}")
 
 if __name__ == "__main__":
     main()

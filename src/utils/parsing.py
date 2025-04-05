@@ -1,11 +1,13 @@
 import re
 import socket
 
+
 def extract_latency(stdout_str):
     """
     Extrait la latence moyenne d'un retour de commande ping.
 
-    Fonctionne pour Linux/macOS, Windows FR/EN, avec prise en charge de plusieurs formats.
+    Fonctionne pour Linux/macOS, Windows FR/EN, avec prise en charge de
+      plusieurs formats.
 
     Args:
         stdout_str (str): Sortie brute du ping.
@@ -29,11 +31,16 @@ def extract_latency(stdout_str):
         return int(match.group(1))
 
     # Fallback générique
-    match = re.search(r"(temps|time)[=<]?=?\s*(\d+)\s*ms", stdout_str, re.IGNORECASE)
+    match = re.search(
+        r"(temps|time)[=<]?=?\s*(\d+)\s*ms",
+        stdout_str,
+        re.IGNORECASE
+        )
     if match:
         return int(match.group(2))
 
     return None
+
 
 def resolve_hostname_if_needed(machine_name, ip):
     """

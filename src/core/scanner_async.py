@@ -2,6 +2,7 @@ import asyncio
 from core.ping import build_ping_command
 from utils.parsing import extract_latency, resolve_hostname_if_needed
 
+
 async def async_ping_ip(machine_name, ip):
     """
     Envoie un ping asynchrone à une adresse IP et retourne le résultat.

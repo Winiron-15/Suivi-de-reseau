@@ -3,6 +3,7 @@ from core.ping import build_ping_command
 from utils.parsing import extract_latency, resolve_hostname_if_needed
 import subprocess
 
+
 def ping_ip(machine_name, ip):
     """
     Envoie un ping à une adresse IP et retourne son statut.
@@ -13,8 +14,6 @@ def ping_ip(machine_name, ip):
 
     Returns:
         tuple: (nom_machine, ip, status, latence)
-            - status (str): "Active", "Inactive" ou "Error: <msg>"
-            - latence (int|None): Temps de réponse moyen en ms si disponible
     """
     try:
         cmd = build_ping_command(ip)
@@ -35,6 +34,7 @@ def ping_ip(machine_name, ip):
     except Exception as e:
         return machine_name, ip, f"Error: {str(e)}", None
 
+
 def scan_ips(machines, threads=10):
     """
     Scanne une liste de machines via des threads.
@@ -44,8 +44,7 @@ def scan_ips(machines, threads=10):
         threads (int, optional): Nombre de threads à utiliser. Défaut : 10.
 
     Returns:
-        list of tuple: Résultats du ping pour chaque machine, au format
-            (nom_machine, ip, status, latence)
+        list of tuple: Résultats du ping pour chaque machine.
     """
     results = []
     with ThreadPoolExecutor(max_workers=threads) as executor:

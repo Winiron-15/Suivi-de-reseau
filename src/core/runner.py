@@ -1,7 +1,13 @@
+"""
+Module pour exécuter un scan réseau (asynchrone ou multithreadé) avec
+option de scan de ports.
+"""
+
 import asyncio
-from core.scanner_async import async_scan_ips
-from core.scanner_threaded import scan_ips
-from core.port_scanner import scan_with_nmap
+
+from src.core.scanner_async import async_scan_ips
+from src.core.scanner_threaded import scan_ips
+from src.core.port_scanner import scan_with_nmap
 
 
 def run_scan(

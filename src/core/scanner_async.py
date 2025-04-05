@@ -1,6 +1,11 @@
+"""
+Module de scan réseau asynchrone basé sur asyncio et ping.
+"""
+
 import asyncio
-from core.ping import build_ping_command
-from utils.parsing import extract_latency, resolve_hostname_if_needed
+
+from src.core.ping import build_ping_command
+from src.utils.parsing import extract_latency, resolve_hostname_if_needed
 
 
 async def async_ping_ip(machine_name, ip):

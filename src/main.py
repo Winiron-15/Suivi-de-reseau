@@ -1,11 +1,16 @@
-from arguments import parse_arguments
-from core.runner import run_scan
-from utils.csv_utils import read_from_csv
-from utils.logger import setup_logger
+"""
+Point d’entrée principal de l'application de scan réseau.
+"""
+
 import ipaddress
 import csv
 import shutil
 import sys
+
+from src.arguments import parse_arguments
+from src.core.runner import run_scan
+from src.utils.csv_utils import read_from_csv
+from src.utils.logger import setup_logger
 
 
 logger = setup_logger()
@@ -42,7 +47,7 @@ def main():
             machines = [(str(ip), str(ip)) for ip in network.hosts()]
             output_file = "data/results/range-results.csv"
         except ValueError as e:
-            logger.error(f"Invalid CIDR range: {e}")
+            logger.error("Invalid CIDR range: %s", e)
             return
 
     elif hasattr(args, 'file') and args.file:
@@ -71,11 +76,15 @@ def main():
             ", ".join(f"{p} - {s}" for p, s in ports) if ports else ""
         )
         logger.info(
-            f"Machine: {machine} - IP: {ip} - Status: {status} - "
-            f"Ping: {latency} ms - Ports: {port_list_str}"
+            "Machine: %s - IP: %s - Status: %s - Ping: %s ms - Ports: %s",
+            machine,
+            ip,
+            status,
+            latency,
+            port_list_str
         )
 
-    with open(output_file, "w", newline="") as csvfile:
+    with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Machine", "IP", "Status", "Ping (ms)", "Ports"])
         for machine, ip, status, latency, ports in results:

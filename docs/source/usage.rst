@@ -25,13 +25,13 @@ Commande :
 
 .. code-block:: bash
 
-    python src/main.py --file data/machines.csv
+    python -m src.main --file data/machines.csv
 
 2. **Scanner une plage IP au format CIDR**
 
 .. code-block:: bash
 
-    python src/main.py --range 192.168.1.0/24
+    python -m src.main --range 192.168.1.0/24
 
 3. **Activer le scan des ports TCP ouverts avec nmap**
 
@@ -39,13 +39,13 @@ Cette option ajoute un scan complet des ports 1 à 65535 sur les hôtes détect�
 
 .. code-block:: bash
 
-    python src/main.py --range 192.168.1.0/24 --ports
+    python -m src.main --range 192.168.1.0/24 --ports
 
 4. **Utiliser la version asynchrone pour de meilleures performances**
 
 .. code-block:: bash
 
-    python src/main.py --file data/machines.csv --async
+    python -m src.main --file data/machines.csv --async
 
 5. **Contrôler le nombre de threads (pour le mode multithreadé uniquement)**
 
@@ -54,9 +54,9 @@ Vous pouvez ajuster ce nombre avec `--threads`.
 
 .. code-block:: bash
 
-    python src/main.py --range 192.168.1.0/24 --threads 20
+    python -m src.main --range 192.168.1.0/24 --threads 20
 
-    python src/main.py --file data/machines.csv --threads 5
+    python -m src.main --file data/machines.csv --threads 5
 
 Résumé des options disponibles
 ------------------------------

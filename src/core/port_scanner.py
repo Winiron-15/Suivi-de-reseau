@@ -3,11 +3,29 @@ import subprocess
 import re
 
 def scan_open_ports(ip, ports, timeout=1.0):
-    """Ancienne méthode de scan par socket (non utilisée avec nmap)."""
+    """
+    Ancienne méthode de scan par sockets (non utilisée actuellement).
+
+    Args:
+        ip (str): Adresse IP cible.
+        ports (list of int): Liste des ports à tester.
+        timeout (float): Temps d'attente en secondes pour chaque tentative.
+
+    Returns:
+        list: Liste vide (fonction non implémentée).
+    """
     return []
 
 def scan_with_nmap(ip):
-    """Scans all TCP ports using nmap and returns a list of (port, service)."""
+    """
+    Utilise nmap pour scanner tous les ports TCP sur une IP donnée.
+
+    Args:
+        ip (str): Adresse IP à scanner.
+
+    Returns:
+        list of tuple: Liste de tuples (port, service) détectés comme ouverts.
+    """
     try:
         cmd = ["nmap", "-p", "1-65535", "-T5", ip]
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)

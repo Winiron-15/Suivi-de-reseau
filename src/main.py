@@ -10,12 +10,25 @@ import sys
 logger = setup_logger()
 
 def check_nmap_installed():
+    """
+    Vérifie que la commande 'nmap' est bien installée sur le système.
+    Arrête l'exécution du programme avec un message d'erreur si nmap est introuvable.
+
+    Returns:
+        None
+    """
     logger.info("Vérification de la présence de nmap...")
     if shutil.which("nmap") is None:
         logger.error("Nmap n'est pas installé ou n'est pas dans le PATH. Veuillez l'installer pour utiliser l'option --ports.")
         sys.exit(1)
 
 def main():
+    """
+    Point d'entrée principal du script. Traite les arguments, lance le scan et sauvegarde les résultats.
+
+    Returns:
+        None
+    """
     args = parse_arguments()
 
     if args.ports:

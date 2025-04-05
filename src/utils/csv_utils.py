@@ -1,7 +1,15 @@
 import csv
 
 def read_from_csv(filename):
-    """Reads machine names and IPs from a CSV file."""
+    """
+    Lit un fichier CSV et extrait les noms de machines et leurs IPs.
+
+    Args:
+        filename (str): Chemin vers le fichier CSV à lire.
+
+    Returns:
+        list of tuple: Liste de tuples (nom_machine, ip).
+    """
     machines = []
     with open(filename, "r") as csvfile:
         reader = csv.reader(csvfile)
@@ -12,7 +20,16 @@ def read_from_csv(filename):
     return machines
 
 def save_to_csv(results, filename="results.csv"):
-    """Saves scan results to a CSV file."""
+    """
+    Enregistre les résultats de scan dans un fichier CSV.
+
+    Args:
+        results (list of tuple): Résultats à enregistrer, sous forme (nom, ip, statut, ping).
+        filename (str, optional): Nom du fichier de sortie. Par défaut "results.csv".
+
+    Returns:
+        None
+    """
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Machine", "IP", "Status", "Ping (ms)"])

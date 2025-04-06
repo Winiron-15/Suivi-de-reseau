@@ -40,7 +40,9 @@ def save_to_csv(results, filename="results.csv"):
         None
     """
     # Crée le dossier de sortie si nécessaire
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    dir_path = os.path.dirname(filename)
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
 
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)

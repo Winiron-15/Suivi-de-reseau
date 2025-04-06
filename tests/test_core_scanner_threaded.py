@@ -65,7 +65,7 @@ class TestCoverageExtensions(unittest.TestCase):
 
     def test_csv_utils_save_to_csv(self):
         """Teste que le CSV est bien sauvegardé avec mock open"""
-        results = [("host1", "192.168.1.1", "Active", 10)]
+        results = [("host1", "192.168.1.1", "Active", 10, [])]
         m = mock_open()
         with patch.object(builtins, "open", m):
             src.utils.csv_utils.save_to_csv(results, "test_output.csv")

@@ -24,7 +24,6 @@ class TestParsing(unittest.TestCase):
         self.assertIsNone(parsing.extract_latency(output))
 
     def test_resolve_hostname_when_different(self):
-        # Simule un vrai resolve en local avec une IP publique connue
         result = parsing.resolve_hostname_if_needed("1.1.1.1", "1.1.1.1")
         self.assertTrue(isinstance(result, str))
 

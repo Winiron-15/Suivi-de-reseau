@@ -1,3 +1,8 @@
+# Tests pour le module 'core/ping'
+
+
+
+# -------- test_ping.py --------
 import unittest
 from src.core import ping
 import platform

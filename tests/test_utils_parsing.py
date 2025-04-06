@@ -1,5 +1,7 @@
 import unittest
+
 from src.utils import parsing
+
 
 class TestParsing(unittest.TestCase):
 
@@ -24,12 +26,17 @@ class TestParsing(unittest.TestCase):
         self.assertIsNone(parsing.extract_latency(output))
 
     def test_resolve_hostname_when_different(self):
-        result = parsing.resolve_hostname_if_needed("1.1.1.1", "1.1.1.1")
+        result = parsing.resolve_hostname_if_needed(
+            "1.1.1.1", "1.1.1.1"
+        )
         self.assertTrue(isinstance(result, str))
 
     def test_resolve_hostname_when_already_named(self):
-        result = parsing.resolve_hostname_if_needed("example.com", "93.184.216.34")
+        result = parsing.resolve_hostname_if_needed(
+            "example.com", "93.184.216.34"
+        )
         self.assertEqual(result, "example.com")
+
 
 if __name__ == "__main__":
     unittest.main()

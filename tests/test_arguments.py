@@ -1,12 +1,11 @@
 # Tests pour le module 'arguments'
-
-
-
 # -------- test_arguments.py --------
+
 import unittest
 from unittest.mock import patch
 import sys
 import src.arguments as arguments
+
 
 class TestArguments(unittest.TestCase):
     def test_default_arguments(self):

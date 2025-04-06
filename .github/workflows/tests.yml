@@ -1,4 +1,4 @@
-name: Run Tests and Coverage
+name: Run Tests, Coverage, and Linting
 
 on: [push, pull_request]
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.10", "3.11"]
+        python-version: ["3.8", "3.10", "3.11", "3.12"]
 
     steps:
     - name: Checkout code
@@ -23,11 +23,18 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y nmap
         python -m pip install --upgrade pip
-        pip install coverage
+        pip install coverage flake8 pylint
 
-    - name: Install pylint
-      run: pip install pylint
-  
+    - name: Run flake8 on src and tests
+      run: |
+        flake8 src/ tests/ | tee flake8-report.txt
+
+    - name: Upload flake8 report
+      uses: actions/upload-artifact@v4
+      with:
+        name: flake8-report-${{ matrix.python-version }}
+        path: flake8-report.txt
+
     - name: Run pylint on src and tests, enforce minimum score
       run: |
         FILES="src tests"
@@ -38,7 +45,7 @@ jobs:
           echo "Pylint score is too low. Minimum required is 9.0"
           exit 1
         fi
-  
+
     - name: Upload pylint report
       uses: actions/upload-artifact@v4
       with:

@@ -25,31 +25,32 @@ jobs:
         python -m pip install --upgrade pip
         pip install coverage flake8 pylint
 
-    - name: Run flake8 on src and tests
-      continue-on-error: true
+    - name: Run flake8
       run: |
         flake8 src/ tests/ | tee flake8-report.txt
+        echo $? > flake8_status
 
-    - name: Run pylint on src and tests, enforce minimum score
-      continue-on-error: true
+    - name: Run pylint
       run: |
         FILES="src tests"
         pylint $FILES | tee pylint-report.txt
         SCORE=$(pylint $FILES | tail -n 2 | grep 'Your code has been rated at' | awk '{print $7}' | cut -d/ -f1)
         echo "Pylint score: $SCORE"
         if (( $(echo "$SCORE < 9.0" | bc -l) )); then
-          echo "Pylint score is too low. Minimum required is 9.0"
-          exit 1
+          echo "Pylint score too low"
+          echo 1 > pylint_status
+        else
+          echo 0 > pylint_status
         fi
 
     - name: Run tests with coverage
-      continue-on-error: true
       run: |
         coverage run --source=src -m unittest discover -s tests
         coverage report -m
         coverage html
+        echo $? > test_status
 
-    - name: Upload all report
+    - name: Upload all reports
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report-${{ matrix.python-version }}
@@ -57,3 +58,14 @@ jobs:
           flake8-report.txt
           pylint-report.txt
           htmlcov/
+
+    - name: Evaluate overall status
+      run: |
+        FLK=$(cat flake8_status || echo 0)
+        PYL=$(cat pylint_status || echo 0)
+        TST=$(cat test_status || echo 0)
+        echo "Exit codes: flake8=$FLK, pylint=$PYL, tests=$TST"
+        if [ "$FLK" -ne 0 ] || [ "$PYL" -ne 0 ] || [ "$TST" -ne 0 ]; then
+          echo "One or more checks failed"
+          exit 1
+        fi

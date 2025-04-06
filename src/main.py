@@ -33,8 +33,7 @@ def check_nmap_installed():
 
 def main():
     """
-    Point d'entrée principal du script. Traite les arguments,
-    lance le scan et sauvegarde les résultats.
+    Point d'entrée principal du script. Traite les arguments, lance le scan et sauvegarde les résultats.
     """
     args = parse_arguments()
 

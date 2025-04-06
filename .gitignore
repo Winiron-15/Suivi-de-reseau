@@ -27,7 +27,6 @@ docs/_static/
 docs/_templates/
 
 # === Fichiers de résultats générés par le script ===
-data/results/
 results.csv
 range-results.csv
 file-results.csv

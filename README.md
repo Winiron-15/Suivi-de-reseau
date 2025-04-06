@@ -103,21 +103,19 @@ Nom de machine, IP, Statut, Ping (ms), Ports ouverts
 ## 🧱 Architecture du projet
 
 ```
-SUVI-DE-RESEAU/
+SUIVI-DE-RESEAU/
 ├── .github/
 │   └── workflows/
 │       ├── deploy-doc.yml
-│       └── pep8.yml
+│       ├── pep8.yml
+│       └── tests.yml
 ├── data/
 │   ├── machines.csv
 │   └── results/
 │       ├── file-results.csv
 │       └── range-results.csv
 ├── docs/
-│   ├── build/
 │   ├── source/
-│   │   ├── _static/
-│   │   ├── _templates/
 │   │   ├── arguments.rst
 │   │   ├── conf.py
 │   │   ├── core.rst
@@ -129,18 +127,30 @@ SUVI-DE-RESEAU/
 │   └── Makefile
 ├── src/
 │   ├── core/
+│   │   ├── __init__.py
 │   │   ├── ping.py
 │   │   ├── port_scanner.py
 │   │   ├── runner.py
 │   │   ├── scanner_async.py
 │   │   └── scanner_threaded.py
 │   ├── utils/
+│   │   ├── __init__.py
 │   │   ├── csv_utils.py
 │   │   ├── logger.py
-│   │   ├── parsing.py
-│   │   └── __init__.py
+│   │   └── parsing.py
+│   ├── __init__.py
 │   ├── arguments.py
 │   └── main.py
+├── tests/
+│   ├── test_arguments.py
+│   ├── test_core_ping.py
+│   ├── test_core_port_scanner.py
+│   ├── test_core_runner.py
+│   ├── test_core_scanner_async.py
+│   ├── test_core_scanner_threaded.py
+│   ├── test_main.py
+│   ├── test_utils_csv_utils.py
+│   └── test_utils_parsing.py
 ├── .gitignore
 └── README.md
 ```

@@ -25,6 +25,24 @@ jobs:
         python -m pip install --upgrade pip
         pip install coverage
 
+    - name: Install pylint
+      run: pip install pylint
+  
+    - name: Run pylint and enforce minimum score
+      run: |
+        SCORE=$(pylint src | tee pylint-report.txt | tail -n 2 | grep 'Your code has been rated at' | awk '{print $7}' | cut -d/ -f1)
+        echo "Pylint score: $SCORE"
+        if (( $(echo "$SCORE < 9.0" | bc -l) )); then
+          echo "Pylint score is too low. Minimum required is 9.0"
+          exit 1
+        fi
+  
+    - name: Upload pylint report
+      uses: actions/upload-artifact@v4
+      with:
+        name: pylint-report-${{ matrix.python-version }}
+        path: pylint-report.txt
+
     - name: Run tests with coverage
       run: |
         coverage run --source=src -m unittest discover -s tests

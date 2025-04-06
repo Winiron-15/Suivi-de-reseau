@@ -3,7 +3,6 @@ Point d’entrée principal de l'application de scan réseau.
 """
 
 import ipaddress
-import csv
 import shutil
 import sys
 
@@ -11,6 +10,7 @@ from src.arguments import parse_arguments
 from src.core.runner import run_scan
 from src.utils.csv_utils import read_from_csv
 from src.utils.logger import setup_logger
+from src.utils.csv_utils import save_to_csv
 
 
 logger = setup_logger()
@@ -84,12 +84,7 @@ def main():
             port_list_str
         )
 
-    with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Machine", "IP", "Status", "Ping (ms)", "Ports"])
-        for machine, ip, status, latency, ports in results:
-            port_str = " ".join(f"[{p} - {s}]" for p, s in ports)
-            writer.writerow([machine, ip, status, latency, port_str])
+    save_to_csv(results, filename=output_file)
 
 
 if __name__ == "__main__":

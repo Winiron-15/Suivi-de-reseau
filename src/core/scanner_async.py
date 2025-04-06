@@ -29,7 +29,7 @@ async def async_ping_ip(machine_name, ip):
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
-        stdout, stderr = await process.communicate()
+        stdout, _ = await process.communicate()
         try:
             stdout_str = stdout.decode('utf-8')
         except UnicodeDecodeError:
@@ -41,10 +41,9 @@ async def async_ping_ip(machine_name, ip):
                 try:
                     machine_name = resolve_hostname_if_needed(machine_name, ip)
                 except Exception:
-                    pass
+                    machine_name = ip  # fallback
             return (machine_name, ip, "Active", latency)
-        else:
-            return (machine_name, ip, "Inactive", None)
+        return (machine_name, ip, "Inactive", None)
     except Exception as e:
         return (machine_name, ip, f"Error: {str(e)}", None)
 

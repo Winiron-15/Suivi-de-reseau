@@ -1,4 +1,6 @@
-# Tests pour le module 'core/scanner_threaded'
+"""
+Tests unitaires pour scanner_threaded et couverture associée.
+"""
 
 import subprocess
 import socket
@@ -13,6 +15,7 @@ import src.core.port_scanner
 
 
 class TestScannerThreaded(unittest.TestCase):
+    """Tests des fonctions principales de scanner_threaded."""
 
     @patch("src.core.scanner_threaded.subprocess.run")
     @patch("src.core.scanner_threaded.extract_latency", return_value=12)
@@ -22,10 +25,11 @@ class TestScannerThreaded(unittest.TestCase):
     )
     def test_scan_ips_success(
         self,
-        mock_build,
-        mock_latency,
+        _mock_build,
+        _mock_extract,
         mock_run
     ):
+        """Doit renvoyer un hôte actif avec latence correcte"""
         mock_run.return_value.returncode = 0
         mock_run.return_value.stdout = "ping output"
 
@@ -42,7 +46,8 @@ class TestScannerThreaded(unittest.TestCase):
         "src.core.scanner_threaded.build_ping_command",
         return_value=["ping", "-c", "1", "256.256.256.256"]
     )
-    def test_scan_ips_failure(self, mock_build, mock_run):
+    def test_scan_ips_failure(self, _mock_build, mock_run):
+        """Doit renvoyer un hôte inactif et latence None"""
         mock_run.return_value.returncode = 1
         mock_run.return_value.stdout = ""
 
@@ -56,8 +61,10 @@ class TestScannerThreaded(unittest.TestCase):
 
 
 class TestCoverageExtensions(unittest.TestCase):
+    """Tests de couverture additionnelle pour utils et port_scanner."""
 
     def test_csv_utils_save_to_csv(self):
+        """Teste que le CSV est bien sauvegardé avec mock open"""
         results = [("host1", "192.168.1.1", "Active", 10)]
         m = mock_open()
         with patch.object(builtins, "open", m):
@@ -65,11 +72,13 @@ class TestCoverageExtensions(unittest.TestCase):
             m.assert_called_once()
 
     def test_parsing_latency_fallback(self):
+        """Teste l'extraction de latence alternative (fallback)"""
         output = "temps=42 ms"
         latency = src.utils.parsing.extract_latency(output)
         self.assertEqual(latency, 42)
 
     def test_parsing_resolve_hostname_exception(self):
+        """Teste qu'un échec de résolution DNS retourne l'IP"""
         with patch("socket.gethostbyaddr", side_effect=socket.herror):
             result = src.utils.parsing.resolve_hostname_if_needed(
                 "192.168.1.1", "192.168.1.1"
@@ -77,6 +86,7 @@ class TestCoverageExtensions(unittest.TestCase):
             self.assertEqual(result, "192.168.1.1")
 
     def test_port_scanner_timeout(self):
+        """Doit retourner [] en cas de timeout de nmap"""
         with patch(
             "subprocess.run",
             side_effect=subprocess.TimeoutExpired("nmap", 60)
@@ -85,6 +95,7 @@ class TestCoverageExtensions(unittest.TestCase):
             self.assertEqual(result, [])
 
     def test_port_scanner_called_process_error(self):
+        """Doit retourner [] si nmap plante (CalledProcessError)"""
         with patch(
             "subprocess.run",
             side_effect=subprocess.CalledProcessError(1, "nmap")
@@ -93,6 +104,7 @@ class TestCoverageExtensions(unittest.TestCase):
             self.assertEqual(result, [])
 
     def test_port_scanner_os_error(self):
+        """Doit retourner [] en cas d'OSError (nmap absent)"""
         with patch(
             "subprocess.run",
             side_effect=OSError("nmap error")
@@ -101,6 +113,7 @@ class TestCoverageExtensions(unittest.TestCase):
             self.assertEqual(result, [])
 
     def test_scanner_threaded_exception(self):
+        """Doit retourner une erreur lisible si le ping échoue totalement"""
         with patch(
             "src.core.scanner_threaded.subprocess.run",
             side_effect=Exception("ping failed")

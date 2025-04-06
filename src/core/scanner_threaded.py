@@ -1,7 +1,12 @@
+"""
+Scan réseau utilisant des threads pour paralléliser les pings.
+"""
+
+import subprocess
+
 from concurrent.futures import ThreadPoolExecutor
 from src.core.ping import build_ping_command
 from src.utils.parsing import extract_latency, resolve_hostname_if_needed
-import subprocess
 
 
 def ping_ip(machine_name, ip):
@@ -22,6 +27,7 @@ def ping_ip(machine_name, ip):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
+            check=True
         )
         if result.returncode == 0:
             stdout_str = result.stdout
@@ -29,9 +35,8 @@ def ping_ip(machine_name, ip):
             if machine_name == ip:
                 machine_name = resolve_hostname_if_needed(machine_name, ip)
             return machine_name, ip, "Active", latency
-        else:
-            return machine_name, ip, "Inactive", None
-    except Exception as e:
+        return machine_name, ip, "Inactive", None
+    except (subprocess.SubprocessError, Exception) as e:
         return machine_name, ip, f"Error: {str(e)}", None
 
 

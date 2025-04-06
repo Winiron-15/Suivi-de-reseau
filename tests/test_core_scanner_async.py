@@ -1,4 +1,6 @@
-# Tests pour le module 'core/scanner_async'
+"""
+Tests asynchrones pour le module src.core.scanner_async.
+"""
 
 import unittest
 
@@ -7,12 +9,14 @@ from src.core import scanner_async
 
 
 class TestScannerAsync(unittest.IsolatedAsyncioTestCase):
+    """Tests basiques du scan réseau asynchrone."""
 
     @patch(
         "src.core.scanner_async.async_ping_ip",
         new_callable=AsyncMock
     )
     async def test_async_scan_ips_success(self, mock_ping):
+        """Doit détecter une IP active avec latence simulée."""
         mock_ping.return_value = (
             "192.168.1.10",
             "192.168.1.10",
@@ -29,6 +33,7 @@ class TestScannerAsync(unittest.IsolatedAsyncioTestCase):
         new_callable=AsyncMock
     )
     async def test_async_scan_ips_failure(self, mock_ping):
+        """Doit détecter une IP inactive avec latence nulle."""
         mock_ping.return_value = (
             "192.168.1.10",
             "192.168.1.10",
@@ -40,6 +45,7 @@ class TestScannerAsync(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result[0][2], "Inactive")
 
     async def test_async_ping_ip_invalid(self):
+        """Doit retourner Inactive pour une IP invalide."""
         result = await scanner_async.async_ping_ip(
             "unknown",
             "256.256.256.256"
@@ -48,6 +54,7 @@ class TestScannerAsync(unittest.IsolatedAsyncioTestCase):
 
 
 class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
+    """Tests avancés de gestion d'erreurs dans le scan réseau asynchrone."""
 
     @patch(
         "src.core.scanner_async.resolve_hostname_if_needed",
@@ -59,9 +66,10 @@ class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
     )
     async def test_resolve_hostname_exception(
         self,
-        mock_latency,
-        mock_resolve
+        _mock_latency,
+        _mock_resolve
     ):
+        """Teste la gestion d'une erreur DNS lors de la résolution."""
         process_mock = AsyncMock()
         process_mock.returncode = 0
         process_mock.communicate.return_value = (
@@ -83,6 +91,7 @@ class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result[2], "Active")
 
     async def test_ping_returncode_nonzero(self):
+        """Doit retourner Inactive si le code retour ping est non nul."""
         process_mock = AsyncMock()
         process_mock.returncode = 1
         process_mock.communicate.return_value = (b"", b"")
@@ -101,6 +110,7 @@ class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result[2], "Inactive")
 
     async def test_decode_utf8_then_latin1(self):
+        """Teste le fallback de décodage de ping (UTF-8 -> latin1)."""
         process_mock = AsyncMock()
         process_mock.returncode = 0
         process_mock.communicate.return_value = (
@@ -126,6 +136,7 @@ class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result[3], 33)
 
     async def test_async_ping_ip_exception(self):
+        """Doit gérer une exception levée lors de la création de la commande ping."""
         with patch(
             "src.core.scanner_async.build_ping_command",
             side_effect=Exception("Boom")

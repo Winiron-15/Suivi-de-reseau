@@ -1,3 +1,7 @@
+"""
+Tests unitaires pour le module runner.
+"""
+
 import unittest
 
 from unittest.mock import patch
@@ -5,12 +9,14 @@ from src.core import runner
 
 
 class TestRunner(unittest.TestCase):
+    """Tests des différentes configurations de run_scan."""
 
     @patch(
         "src.core.runner.scan_ips",
         return_value=[("host1", "192.168.1.1", "Active", 12)]
     )
-    def test_run_scan_threaded_without_ports(self, mock_scan):
+    def test_run_scan_threaded_without_ports(self, _mock_scan):
+        """Doit lancer un scan threadé sans scan de ports."""
         machines = [("host1", "192.168.1.1")]
         results = runner.run_scan(
             machines,
@@ -26,7 +32,8 @@ class TestRunner(unittest.TestCase):
         "src.core.runner.async_scan_ips",
         return_value=[("host2", "192.168.1.2", "Active", 15)]
     )
-    def test_run_scan_async_without_ports(self, mock_async_scan):
+    def test_run_scan_async_without_ports(self, _mock_async_scan):
+        """Doit lancer un scan asynchrone sans scan de ports."""
         machines = [("host2", "192.168.1.2")]
         results = runner.run_scan(
             machines,
@@ -46,7 +53,8 @@ class TestRunner(unittest.TestCase):
         "src.core.runner.scan_ips",
         return_value=[("host3", "192.168.1.3", "Active", 8)]
     )
-    def test_run_scan_threaded_with_ports(self, mock_scan, mock_nmap):
+    def test_run_scan_threaded_with_ports(self, _mock_scan, _mock_nmap):
+        """Doit lancer un scan threadé avec scan de ports sur hôte actif."""
         machines = [("host3", "192.168.1.3")]
         results = runner.run_scan(
             machines,
@@ -63,9 +71,10 @@ class TestRunner(unittest.TestCase):
     )
     def test_run_scan_threaded_with_ports_on_inactive_host(
         self,
-        mock_scan,
-        mock_nmap
+        _mock_scan,
+        _mock_nmap
     ):
+        """Doit ignorer le scan de ports si l'hôte est inactif."""
         machines = [("host4", "192.168.1.4")]
         results = runner.run_scan(
             machines,

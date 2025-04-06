@@ -1,3 +1,6 @@
+"""
+Utilitaires pour lire et écrire des fichiers CSV liés au scan réseau.
+"""
 import csv
 
 
@@ -12,7 +15,7 @@ def read_from_csv(filename):
         list of tuple: Liste de tuples (nom_machine, ip).
     """
     machines = []
-    with open(filename, "r") as csvfile:
+    with open(filename, "r", encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # Skip header row
         for row in reader:
@@ -34,7 +37,7 @@ def save_to_csv(results, filename="results.csv"):
     Returns:
         None
     """
-    with open(filename, "w", newline="") as csvfile:
+    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Machine", "IP", "Status", "Ping (ms)"])
         writer.writerows(results)

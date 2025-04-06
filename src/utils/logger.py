@@ -1,3 +1,7 @@
+"""
+Configuration d'un logger personnalisé pour l'application de scan réseau.
+"""
+
 import logging
 
 

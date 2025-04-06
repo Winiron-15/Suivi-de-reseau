@@ -1,3 +1,7 @@
+"""
+Utilitaires de parsing pour l'extraction de latence et la résolution DNS.
+"""
+
 import re
 import socket
 
@@ -56,6 +60,6 @@ def resolve_hostname_if_needed(machine_name, ip):
     if machine_name == ip:
         try:
             return socket.gethostbyaddr(ip)[0]
-        except Exception:
+        except socket.herror:
             return ip
     return machine_name

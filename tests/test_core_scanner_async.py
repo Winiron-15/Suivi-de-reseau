@@ -136,7 +136,10 @@ class TestScannerAsyncExtended(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result[3], 33)
 
     async def test_async_ping_ip_exception(self):
-        """Doit gérer une exception levée lors de la création de la commande ping."""
+        """
+        Doit gérer une exception levée lors de la
+        création de la commande ping.
+        """
         with patch(
             "src.core.scanner_async.build_ping_command",
             side_effect=Exception("Boom")

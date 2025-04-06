@@ -46,8 +46,17 @@ def save_to_csv(results, filename="results.csv"):
 
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Machine", "IP", "Status", "Ping (ms)", "Ports (Services)"])
+        writer.writerow([
+            "Machine",
+            "IP",
+            "Status",
+            "Ping (ms)",
+            "Ports (Services)"
+        ])
 
         for machine, ip, status, latency, ports in results:
-            port_str = " ".join(f"[{p} - {s}]" for p, s in ports) if ports else ""
+            port_str = (
+                " ".join(f"[{p} - {s}]" for p, s in ports)
+                if ports else ""
+            )
             writer.writerow([machine, ip, status, latency, port_str])

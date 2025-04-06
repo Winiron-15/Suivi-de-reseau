@@ -24,7 +24,10 @@ class TestPortScannerWithHttpServer(unittest.TestCase):
 
     @patch("subprocess.run")
     def test_scan_with_open_ports_parsing(self, mock_run):
-        """Teste l'analyse correcte de la sortie Nmap avec plusieurs ports ouverts."""
+        """
+        Teste l'analyse correcte de la sortie
+        Nmap avec plusieurs ports ouverts.
+        """
         mock_process = MagicMock()
         mock_process.stdout = (
             "Starting Nmap 7.80\n"

@@ -28,7 +28,8 @@ jobs:
     - name: Run flake8
       run: |
         flake8 src/ tests/ | tee flake8-report.txt
-        echo $? > flake8_status
+        FLAKE8_STATUS=${PIPESTATUS[0]}
+        echo $FLAKE8_STATUS > flake8_status
 
     - name: Run pylint
       run: |

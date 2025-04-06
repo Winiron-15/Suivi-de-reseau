@@ -28,9 +28,11 @@ jobs:
     - name: Install pylint
       run: pip install pylint
   
-    - name: Run pylint and enforce minimum score
+    - name: Run pylint on src and tests, enforce minimum score
       run: |
-        SCORE=$(pylint src | tee pylint-report.txt | tail -n 2 | grep 'Your code has been rated at' | awk '{print $7}' | cut -d/ -f1)
+        FILES="src tests"
+        pylint $FILES | tee pylint-report.txt
+        SCORE=$(pylint $FILES | tail -n 2 | grep 'Your code has been rated at' | awk '{print $7}' | cut -d/ -f1)
         echo "Pylint score: $SCORE"
         if (( $(echo "$SCORE < 9.0" | bc -l) )); then
           echo "Pylint score is too low. Minimum required is 9.0"

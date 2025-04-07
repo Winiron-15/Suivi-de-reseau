@@ -47,6 +47,8 @@ Voici une vue plus détaillée de l’organisation technique du dépôt :
 
 - **README.md** et **.gitignore** : fichiers classiques d’accueil de projet et d’exclusion Git.
 
+🗂️ [Voir le schéma complet de l’architecture du projet ici](structure.md)
+
 ## 🛠️ Développement
 
 ### 🔧 Étapes principales réalisées

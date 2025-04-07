@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utils Modules &#8212; Documentation Suivi de Réseau 1.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=7a28dfa3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Core Modules" href="core.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-src.utils.csv_utils">
+<span id="utils-modules"></span><h1>Utils Modules<a class="headerlink" href="#module-src.utils.csv_utils" title="Lien vers cette rubrique">¶</a></h1>
+<p>Utilitaires pour lire et écrire des fichiers CSV liés au scan réseau.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.csv_utils.read_from_csv">
+<span class="sig-prename descclassname"><span class="pre">src.utils.csv_utils.</span></span><span class="sig-name descname"><span class="pre">read_from_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/csv_utils.html#read_from_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.csv_utils.read_from_csv" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lit un fichier CSV et extrait les noms de machines et leurs IPs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Chemin vers le fichier CSV à lire.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Liste de tuples (nom_machine, ip).</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.csv_utils.save_to_csv">
+<span class="sig-prename descclassname"><span class="pre">src.utils.csv_utils.</span></span><span class="sig-name descname"><span class="pre">save_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'results.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/csv_utils.html#save_to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.csv_utils.save_to_csv" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Enregistre les résultats de scan dans un fichier CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results</strong> (<em>list</em><em> of </em><em>tuple</em>) – Résultats à enregistrer,
+sous forme (nom, ip, statut, latence, ports),
+où ports est une liste de tuples (port, service).</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Nom du fichier de sortie.
+Par défaut « results.csv ».</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.utils.logger">Configuration d’un logger personnalisé pour l’application de scan réseau.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.logger.setup_logger">
+<span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network_scanner'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/logger.html#setup_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.logger.setup_logger" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Configure et retourne un logger personnalisé avec un format lisible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Nom du logger. Par défaut « network_scanner ».</p></li>
+<li><p><strong>level</strong> (<em>int</em><em>, </em><em>optional</em>) – Niveau de log (ex: logging.INFO, logging.DEBUG).
+Par défaut INFO.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instance de logger configurée.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.utils.parsing">Utilitaires de parsing pour l’extraction de latence et la résolution DNS.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.parsing.extract_latency">
+<span class="sig-prename descclassname"><span class="pre">src.utils.parsing.</span></span><span class="sig-name descname"><span class="pre">extract_latency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stdout_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/parsing.html#extract_latency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.parsing.extract_latency" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Extrait la latence moyenne d’un retour de commande ping.</p>
+<dl class="simple">
+<dt>Fonctionne pour Linux/macOS, Windows FR/EN, avec prise en charge de</dt><dd><p>plusieurs formats.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stdout_str</strong> (<em>str</em>) – Sortie brute du ping.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Latence moyenne en millisecondes, ou None si introuvable.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.parsing.resolve_hostname_if_needed">
+<span class="sig-prename descclassname"><span class="pre">src.utils.parsing.</span></span><span class="sig-name descname"><span class="pre">resolve_hostname_if_needed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">machine_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/parsing.html#resolve_hostname_if_needed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.parsing.resolve_hostname_if_needed" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Résout le nom DNS de l’hôte si machine_name est une adresse IP brute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>machine_name</strong> (<em>str</em>) – Nom ou IP de la machine.</p></li>
+<li><p><strong>ip</strong> (<em>str</em>) – Adresse IP de la machine.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nom de la machine si résolu, sinon retourne l’IP.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Suivi de Réseau</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contenu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Utilisation de l’outil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arguments.html">Arguments Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utils Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.utils.csv_utils.read_from_csv"><code class="docutils literal notranslate"><span class="pre">read_from_csv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.utils.csv_utils.save_to_csv"><code class="docutils literal notranslate"><span class="pre">save_to_csv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.utils.logger.setup_logger"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.utils.parsing.extract_latency"><code class="docutils literal notranslate"><span class="pre">extract_latency()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#src.utils.parsing.resolve_hostname_if_needed"><code class="docutils literal notranslate"><span class="pre">resolve_hostname_if_needed()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="core.html" title="Chapitre précédent">Core Modules</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Géraud GAUZINS.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

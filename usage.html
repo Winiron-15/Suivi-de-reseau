@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utilisation de l’outil &#8212; Documentation Suivi de Réseau 1.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=7a28dfa3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Arguments Module" href="arguments.html" />
+    <link rel="prev" title="Documentation - Suivi de Réseau" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="utilisation-de-l-outil">
+<h1>Utilisation de l’outil<a class="headerlink" href="#utilisation-de-l-outil" title="Lien vers cette rubrique">¶</a></h1>
+<p>Le projet <strong>Suivi de Réseau</strong> permet d’effectuer des analyses réseau à l’aide de la ligne de commande.
+Vous pouvez scanner des adresses IP en les listant dans un fichier CSV ou en spécifiant une plage IP
+au format CIDR. L’outil vous offre également le choix entre un scan multithreadé (par défaut) ou
+asynchrone, ainsi que l’option de détecter les ports ouverts avec <cite>nmap</cite>.</p>
+<section id="commandes-disponibles">
+<h2>Commandes disponibles<a class="headerlink" href="#commandes-disponibles" title="Lien vers cette rubrique">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Scanner un fichier CSV de machines</strong></p></li>
+</ol>
+<p>Le fichier CSV doit contenir au moins deux colonnes : le nom de la machine et son IP.</p>
+<p>Exemple de fichier : <cite>data/machines.csv</cite></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Nom,IP
+Serveur1,192.168.1.10
+Routeur,192.168.1.1
+</pre></div>
+</div>
+<p>Commande :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--file<span class="w"> </span>data/machines.csv
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Scanner une plage IP au format CIDR</strong></p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--range<span class="w"> </span><span class="m">192</span>.168.1.0/24
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Activer le scan des ports TCP ouverts avec nmap</strong></p></li>
+</ol>
+<p>Cette option ajoute un scan complet des ports 1 à 65535 sur les hôtes détectés comme actifs.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--range<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span>--ports
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Utiliser la version asynchrone pour de meilleures performances</strong></p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--file<span class="w"> </span>data/machines.csv<span class="w"> </span>--async
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><strong>Contrôler le nombre de threads (pour le mode multithreadé uniquement)</strong></p></li>
+</ol>
+<p>Par défaut, l’outil utilise 10 threads pour exécuter les pings en parallèle.
+Vous pouvez ajuster ce nombre avec <cite>–threads</cite>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--range<span class="w"> </span><span class="m">192</span>.168.1.0/24<span class="w"> </span>--threads<span class="w"> </span><span class="m">20</span>
+
+python<span class="w"> </span>-m<span class="w"> </span>src.main<span class="w"> </span>--file<span class="w"> </span>data/machines.csv<span class="w"> </span>--threads<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+</section>
+<section id="resume-des-options-disponibles">
+<h2>Résumé des options disponibles<a class="headerlink" href="#resume-des-options-disponibles" title="Lien vers cette rubrique">¶</a></h2>
+<ul class="simple">
+<li><p><cite>–file</cite> : Fichier CSV à utiliser comme source d’IP</p></li>
+<li><p><cite>–range</cite> : Plage IP au format CIDR à scanner</p></li>
+<li><p><cite>–ports</cite> : Active le scan complet des ports (via nmap)</p></li>
+<li><p><cite>–async</cite> : Utilise la version asynchrone (sinon multithreadé)</p></li>
+<li><p><cite>–threads</cite> : Nombre de threads à utiliser (si mode multithread)</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Suivi de Réseau</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contenu</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utilisation de l’outil</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#commandes-disponibles">Commandes disponibles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resume-des-options-disponibles">Résumé des options disponibles</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="arguments.html">Arguments Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils Modules</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="Chapitre précédent">Documentation - Suivi de Réseau</a></li>
+      <li>Next: <a href="arguments.html" title="Chapitre suivant">Arguments Module</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Géraud GAUZINS.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/usage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

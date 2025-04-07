@@ -20,8 +20,7 @@ Il peut fonctionner à partir :
 - [💾 Résultats](#-résultats)
 - [🧱 Architecture du projet](#-architecture-du-projet)
 - [📚 Documentation](#-documentation)
-- [🧪 Exécution des tests](#-exécution-des-tests)
-- [✍️ Auteur](#️-éditeur)
+- [✍️ Auteur](#️-auteur)
 
 ---
 

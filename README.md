@@ -1,10 +1,27 @@
 # 🔍 Projet : Suivi de Réseau
 
+![Tests](https://github.com/winiron-15/Suivi-de-reseau/actions/workflows/tests.yml/badge.svg)
+![Docs](https://github.com/winiron-15/Suivi-de-reseau/actions/workflows/deploy-doc.yml/badge.svg)
+
 Ce projet permet de **scanner un réseau local** afin d’identifier les machines actives et de détecter les **ports TCP ouverts** sur celles-ci via `nmap`.
 
 Il peut fonctionner à partir :
 - d’un **fichier CSV** contenant les IPs et noms de machines
 - ou d’une **plage IP au format CIDR** (ex : `192.168.1.0/24`)
+
+---
+
+## 🧭 Sommaire
+
+- [⚠️ Avertissement légal](#️-avertissement-légal)
+- [📦 Prérequis](#-prérequis)
+- [🚀 Installation rapide](#-installation-rapide)
+- [▶️ Utilisation](#️-utilisation)
+- [💾 Résultats](#-résultats)
+- [🧱 Architecture du projet](#-architecture-du-projet)
+- [📚 Documentation](#-documentation)
+- [🧪 Exécution des tests](#-exécution-des-tests)
+- [✍️ Auteur](#️-éditeur)
 
 ---
 
@@ -18,13 +35,21 @@ Il peut fonctionner à partir :
 
 ---
 
+## 🚀 Installation rapide
+
+```bash
+git clone https://github.com/winiron-15/Suivi-de-reseau.git
+cd Suivi-de-reseau
+```
+---
+
 ## 📦 Prérequis
 
 ### ✔️ Python
 
 - Version recommandée : **Python 3.7+**
 
-### ✔️ Outil système requis : `nmap`
+### ✔️ Outil système requis pour le scan de ports: `nmap`
 
 #### ✅ Sur Linux (Debian/Ubuntu) :
 
@@ -65,7 +90,12 @@ Commande :
 python -m src.main --file data/machines.csv
 ```
 
-### 🌐 2. Scanner une plage IP au format CIDR
+### 🌐 2. Scanner depuis une IP
+Une IP seule
+```bash
+python -m src.main --range 192.168.1.10
+```
+Une plage IP au format CIDR
 
 ```bash
 python -m src.main --range 192.168.1.0/24
@@ -73,11 +103,14 @@ python -m src.main --range 192.168.1.0/24
 
 ### ⚙️ Options supplémentaires
 
-| Option         | Description                                                    |
-|----------------|----------------------------------------------------------------|
-| `--threads`    | Nombre de threads utilisés pour le scan (défaut : 10)          |
-| `--async`      | Utiliser le scan **asynchrone** plutôt que multithreadé        |
-| `--ports`      | Scanner tous les ports TCP (1–65535) sur les hôtes actifs      |
+| Option         | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `--threads`    | Définit le nombre de threads pour le scan multithreadé (par défaut : 10).   |
+| `--async`      | Active le mode **asynchrone** pour accélérer le scan IP (remplace threading).|
+| `--ports`      | Lance un scan complet des **ports TCP (1–65535)** avec `nmap` sur les IP actives. |
+| `--file`       | Spécifie un fichier CSV d’entrée contenant les IPs et noms de machines.     |
+| `--range`      | Spécifie une plage IP au format CIDR **ou une liste d'IP séparées par des virgules**. |
+
 
 Exemple complet :
 
@@ -104,60 +137,24 @@ Nom de machine, IP, Statut, Ping (ms), Ports ouverts
 
 ```
 SUIVI-DE-RESEAU/
-├── .github/
-│   └── workflows/
-│       ├── deploy-doc.yml
-│       ├── pep8.yml
-│       └── tests.yml
-├── data/
-│   ├── machines.csv
-│   └── results/
-│       ├── file-results.csv
-│       └── range-results.csv
-├── docs/
-│   ├── source/
-│   │   ├── arguments.rst
-│   │   ├── conf.py
-│   │   ├── core.rst
-│   │   ├── index.rst
-│   │   ├── main.rst
-│   │   ├── usage.rst
-│   │   └── utils.rst
-│   ├── make.bat
-│   └── Makefile
-├── src/
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── ping.py
-│   │   ├── port_scanner.py
-│   │   ├── runner.py
-│   │   ├── scanner_async.py
-│   │   └── scanner_threaded.py
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   ├── csv_utils.py
-│   │   ├── logger.py
-│   │   └── parsing.py
-│   ├── __init__.py
-│   ├── arguments.py
-│   └── main.py
-├── tests/
-│   ├── test_arguments.py
-│   ├── test_core_ping.py
-│   ├── test_core_port_scanner.py
-│   ├── test_core_runner.py
-│   ├── test_core_scanner_async.py
-│   ├── test_core_scanner_threaded.py
-│   ├── test_main.py
-│   ├── test_utils_csv_utils.py
-│   └── test_utils_parsing.py
-├── .gitignore
-└── README.md
+├── .github/workflows/       # CI : tests, lint, déploiement doc
+├── data/                    # CSV d'entrée + résultats
+├── docs/source/             # Sphinx : .rst + conf.py
+├── src/core/ + utils/       # Modules de scan et outils
+├── tests/                   # Tests unitaires pour tous les modules
+├── main.py                  # Point d’entrée CLI
+└── README.md, .gitignore    # Métadonnées projet
 ```
-📚 [Consulter la documentation complète](https://winiron-15.github.io/Suivi-de-reseau/)
+[Voir le schéma complet ici](structure.md)
 
 ---
 
+## 📚 Documentation
+
+La documentation complète est disponible ici :  
+👉 [https://winiron-15.github.io/Suivi-de-reseau/](https://winiron-15.github.io/Suivi-de-reseau/)
+
+---
 ## ✍️ Auteur
 
 Projet réalisé dans le cadre d’un exercice de développement réseau en Python  

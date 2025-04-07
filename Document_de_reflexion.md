@@ -137,9 +137,10 @@ Le pipeline CI/CD mis en place répond aux objectifs suivants :
 
 🟩 Le pipeline CI/CD répond parfaitement aux attentes : il exécute les tests sur plusieurs versions de Python, vérifie la qualité du code avec `flake8` et `pylint`, mesure la couverture de code avec `coverage`, et génère automatiquement la documentation Sphinx. Cette documentation est structurée et accessible depuis GitHub Pages.
 
-🟦 Cependant, certains points peuvent encore être améliorés. Le fichier `README.md` pourrait être enrichi avec des badges d’intégration continue, une illustration du rendu de la documentation, et quelques exemples d’utilisation visuelle.  
-Par ailleurs, bien que le scan des ports soit fonctionnel avec `nmap`, l’intégration d’une solution en pur Python aurait rendu le projet plus portable.  
-Enfin, il pourrait être intéressant d’ajouter un système d’installation (comme un `setup.py` ou un `pyproject.toml`), ainsi que des tests d’intégration simulant des scénarios plus proches d’un environnement réel.
+🟦 Certains points peuvent encore être perfectionnés pour rendre le projet plus complet et plus robuste.  
+Par exemple, bien que le scan des ports fonctionne efficacement avec `nmap`, l’ajout d’une alternative en pur Python renforcerait la portabilité du projet sur des environnements restreints ou sans accès administrateur.  
+Il serait également pertinent d’intégrer un système d’installation comme un `setup.py` ou un `pyproject.toml` afin de faciliter le déploiement et la distribution du projet.  
+Enfin, l’ajout de tests d’intégration permettant de simuler des scénarios réseau réels viendrait compléter les tests unitaires déjà en place, en validant le comportement global de l’application dans des conditions proches de la production.
 
 🟩 Ce projet m’a permis de renforcer mes compétences sur la structuration propre d’un projet Python, et plus globalement sur l’organisation d’un dépôt Git. J’ai également consolidé mes connaissances en intégration continue avec GitHub Actions, en documentation technique avec Sphinx, en écriture de tests unitaires avancés (y compris pour des fonctions asynchrones), et en conception d’outils réseau fiables, maintenables et bien documentés.
 
